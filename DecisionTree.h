@@ -32,25 +32,38 @@ class DecisionTree {
     void construct_node(void *&ptr, long &used_key, const ReadCSV::PassagersData &data);
     
  public:
-    bool predict(const ReadCSV::TestPassagerData& data);
+    int predict(const ReadCSV::PassagerData& data);
 
  private:
-    template<int i, int keys, typename T>
-    auto _get_child(void* ptr, const T& key)
+    template<int i, int keys>
+    std::pair<long, void*> _get_child(void* ptr, const ReadCSV::PassagerData & data, long used_key)
     {
         if constexpr(i < keys)
         {
-            if (typeid(typename std::tuple_element<i, ReadCSV::PassagerData>::type) == typeid(T))
+            if (used_key == i)
             {
-                auto& childs = ((_tree_node<typename std::tuple_element<i, ReadCSV::PassagerData>::type>*)ptr)->childs;
-                return childs.find(key);
+                const std::map<typename std::tuple_element<i, ReadCSV::PassagerData>::type, std::pair<long, void*>>& childs =
+                    ((_tree_node<typename std::tuple_element<i, ReadCSV::PassagerData>::type>*)ptr)->childs;
+                const long& res = ((_tree_node<typename std::tuple_element<i, ReadCSV::PassagerData>::type>*)ptr)->res;
+                if (res != -1)
+                {
+                    auto p = childs.find(std::get<i>(data));
+                    if (p != childs.end())
+                        return p->second;
+                    else
+                        return std::make_pair(-1, nullptr);
+                }
+                else
+                    return std::make_pair(res, nullptr);
             }
             else
-                _get_child<i + 1, keys>(ptr, key);
+                return _get_child<i + 1, keys>(ptr, data, used_key);
         }
+        else
+            return std::make_pair(-1, nullptr);
     }
     template<int i, int keys>
-    auto _get_childs(void* ptr, long used_key, const std::vector<ReadCSV::PassagersData>& childs_datas)
+    void _get_childs(void* ptr, long used_key, const std::vector<ReadCSV::PassagersData>& childs_datas)
     {
         if constexpr(i < keys)
         {

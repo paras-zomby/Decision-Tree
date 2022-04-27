@@ -43,10 +43,18 @@ void DecisionTree::construct_node(void *&ptr, long &used_key, const ReadCSV::Pas
     _get_childs<0, std::tuple_size<ReadCSV::PassagerData>::value>(ptr, used_key, childs);
 }
 
-bool DecisionTree::predict(const ReadCSV::TestPassagerData& data)
+int DecisionTree::predict(const ReadCSV::PassagerData& data)
 {
     if(root == nullptr)
         throw std::logic_error("DecisionTree::predict ERROR: cannot predict before fit");
-
-    return false;
+    void *p = root;
+    long type = root_type;
+    while (true)
+    {
+        auto ret = _get_child<0, std::tuple_size<ReadCSV::PassagerData>::value>(p, data, type);
+        if (ret.second == nullptr)
+            return ret.first;
+        type = ret.first;
+        p = ret.second;
+    }
 }
