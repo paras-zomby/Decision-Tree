@@ -45,7 +45,7 @@ class DecisionTree {
                 const std::map<typename std::tuple_element<i, ReadCSV::PassagerData>::type, std::pair<long, void*>>& childs =
                     ((_tree_node<typename std::tuple_element<i, ReadCSV::PassagerData>::type>*)ptr)->childs;
                 const long& res = ((_tree_node<typename std::tuple_element<i, ReadCSV::PassagerData>::type>*)ptr)->res;
-                if (res != -1)
+                if (res == -1)
                 {
                     auto p = childs.find(std::get<i>(data));
                     if (p != childs.end())

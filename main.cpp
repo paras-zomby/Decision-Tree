@@ -6,7 +6,9 @@ int main()
 {
     auto data = ReadCSV::readfromCSVfile("../dataset/train.csv");
     DecisionTree decision_tree(data);
-    std::cout << decision_tree.predict(data.at(4)) << std::endl;
-    std::cout << std::get<1>(data.at(4)) << std::endl;
+    for (int i = 0; i < 100; ++i)
+    {
+        std::cout << decision_tree.predict(data.at(i)) << ' ' << std::get<1>(data.at(i)) << std::endl;
+    }
     return 0;
 }

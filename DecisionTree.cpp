@@ -32,6 +32,8 @@ void DecisionTree::construct_node(void *&ptr, long &used_key, const ReadCSV::Pas
 {
     if (check_if_ok<1>(data))
     {
+        used_key = 0;
+        new_child(ptr, used_key);
         _set_result<0, std::tuple_size<ReadCSV::PassagerData>::value>(ptr, used_key, std::get<1>(data.back()));
         return;
     }
@@ -39,7 +41,7 @@ void DecisionTree::construct_node(void *&ptr, long &used_key, const ReadCSV::Pas
     used_key = std::get<0>(calc_ID3s(data));
     new_child(ptr, used_key);
     used_keys.insert(used_key);
-    diff_node(root, used_key, data, childs);
+    diff_node(ptr, used_key, data, childs);
     _get_childs<0, std::tuple_size<ReadCSV::PassagerData>::value>(ptr, used_key, childs);
 }
 
