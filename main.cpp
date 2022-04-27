@@ -4,7 +4,7 @@
 
 int main()
 {
-    auto data = ReadCSV::readfromCSVfile("../dataset/train.csv");
+    ReadCSV::PassagersData data = ReadCSV::readfromCSVfile("../dataset/train.csv", ReadCSV::Dataset::TRAIN);
     DecisionTree decision_tree(data);
     for (int i = 0; i < 100; ++i)
     {

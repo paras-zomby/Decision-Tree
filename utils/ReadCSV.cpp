@@ -5,7 +5,8 @@
 #include <iostream>
 using namespace std;
 
-ReadCSV::PassagersData ReadCSV::readfromCSVfile(const std::string &path, char sep)
+ReadCSV::PassagersData
+ReadCSV::readfromCSVfile(const std::string &path, ReadCSV::Dataset dataset_kind, char sep)
 {
     ifstream file(path);
     if (!file.is_open())
@@ -18,8 +19,11 @@ ReadCSV::PassagersData ReadCSV::readfromCSVfile(const std::string &path, char se
     {
         getline(file, buff, sep);
         get<0>(buff_data) = buff.empty() ? -1 : stoi(buff);
-        getline(file, buff, sep);
-        get<1>(buff_data) = static_cast<bool>(stoi(buff));
+        if (dataset_kind == Dataset::TRAIN)  // 训练数据集中才有存活与否的数据
+        {
+            getline(file, buff, sep);
+            get<1>(buff_data) = static_cast<bool>(stoi(buff));
+        }
         getline(file, buff, sep);
         get<2>(buff_data) = buff.empty() ? -1 : stoi(buff);
         getline(file, buff, sep);
