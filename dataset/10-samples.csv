@@ -1,0 +1,11 @@
+order,fever,cough,x-ray,ESR,auscultation,disease
+1,high,heavy,flack,normal,bubble-like,Pneumonia
+2,medium,heavy,flack,normal,bubble-like,Pneumonia
+3,low,slight,spot,normal,dry-beep,Pneumonia
+4,high,medium,flack,normal,bubble-like,Pneumonia
+5,medium,slight,flack,normal,bubble-like,Pneumonia
+6,absent,slight,strip,normal,normal,Tuberculosis
+7,high,heavy,hole,fast,dry-beep,Tuberculosis
+8,low,slight,strip,normal,normal,Tuberculosis
+9,absent,slight,spot,fast,dry-beep,Tuberculosis
+10,low,medium,flack,fast,normal,Tuberculosis

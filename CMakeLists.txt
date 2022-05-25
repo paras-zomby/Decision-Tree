@@ -4,4 +4,4 @@ project(MachineLearning_DecisionTree)
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories(utils)
-add_executable(MachineLearning_DecisionTree main.cpp utils/ReadCSV.cpp DecisionTree.cpp DecisionTree.h)
+add_executable(MachineLearning_DecisionTree main.cpp utils/ReadCSV_10.cpp DecisionTree.cpp DecisionTree.h)

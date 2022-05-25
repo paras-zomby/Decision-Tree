@@ -1,7 +1,7 @@
 #ifndef _DECISIONTREE_H_
 #define _DECISIONTREE_H_
 
-#include "ReadCSV.h"
+#include "ReadCSV_10.h"
 #include <iostream>
 #include <map>
 #include <memory>
@@ -20,6 +20,10 @@ class DecisionTree {
  private:
     void* root = nullptr;
     long root_type = -1;
+
+ public:
+    constexpr static int target_elem = 5;
+
  public:
     DecisionTree() = default;
     explicit DecisionTree(const ReadCSV::PassagersData& data);
@@ -128,29 +132,30 @@ class DecisionTree {
             if (data.empty())
                 return 0.0;
             double id3 = 0.0;
-            if (used_keys.end() == used_keys.find(i) && i != 1)
+            if (used_keys.end() == used_keys.find(i) && i != target_elem)
             {
+                idx = i;
                 std::map<typename std::tuple_element<i, ReadCSV::PassagerData>::type,
                          std::array<int, 2>> total;
                 for (auto &passager: data)
                 {
                     auto p = total.find(std::get<i>(passager));
                     if (p != total.end())
-                        ++(p->second[static_cast<long>(std::get<1>(passager))]);
+                        ++(p->second[static_cast<long>(std::get<5>(passager))]);
                     else
                         ++(total.insert(std::make_pair(std::get<i>(passager), std::array{0, 0}))
-                            .first->second[static_cast<long>(std::get<1>(passager))]);
+                            .first->second[static_cast<long>(std::get<5>(passager))]);
                 }
                 for (auto &p: total)
                 {
                     double sum = p.second[0] + p.second[1];
-                    id3 += sum / data.size() * -1 * (p.second[0] / sum * log2(p.second[0] / sum)
+                    id3 += sum / data.size() * -1 * (p.second[0] / sum * log2(std::max(p.second[0] / sum, 1e-6))
                                                      + (p.second[1] / sum)
-                                                       * log2(p.second[1] / sum));
+                                                       * log2(std::max(p.second[1] / sum, 1e-6)));
                 }
             }
             auto ret = _calc_ID3<i + 1, keys>(data, idx);
-            if (ret < id3)
+            if (ret > id3)
             {
                 idx = i;
                 return id3;

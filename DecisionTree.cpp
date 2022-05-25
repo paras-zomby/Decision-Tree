@@ -10,7 +10,7 @@ DecisionTree::DecisionTree(const ReadCSV::PassagersData &data)
 
 void DecisionTree::construct_tree(const ReadCSV::PassagersData &data)
 {
-    if (check_if_ok<1>(data))
+    if (check_if_ok<target_elem>(data))
         return;
     std::vector<ReadCSV::PassagersData> childs;
     auto idx = std::get<0>(calc_ID3s(data));
@@ -30,11 +30,11 @@ void DecisionTree::new_root(long used_key)
 
 void DecisionTree::construct_node(void *&ptr, long &used_key, const ReadCSV::PassagersData &data)
 {
-    if (check_if_ok<1>(data))
+    if (check_if_ok<target_elem>(data))
     {
         used_key = 0;
         new_child(ptr, used_key);
-        _set_result<0, std::tuple_size<ReadCSV::PassagerData>::value>(ptr, used_key, std::get<1>(data.back()));
+        _set_result<0, std::tuple_size<ReadCSV::PassagerData>::value>(ptr, used_key, std::get<5>(data.back()));
         return;
     }
     std::vector<ReadCSV::PassagersData> childs;

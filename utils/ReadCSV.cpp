@@ -14,6 +14,7 @@ ReadCSV::readfromCSVfile(const std::string &path, ReadCSV::Dataset dataset_kind,
     string buff;
     PassagerData buff_data;
     PassagersData data;
+    // 扔掉header
     getline(file, buff);
     while (file.peek() && !file.eof())
     {
