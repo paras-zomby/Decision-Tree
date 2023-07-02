@@ -7,4 +7,7 @@ to decides how to pick nodes.
 
 At first I chose C++ because I think the type-issue of C++ can
 be solved using template, and I perfer to use C++ 
-usually. However, when i start, i find that it is really harder than i thought! what can i do is just learning while coding. i firt use C++ template metaprograming in this proj, and try to impl some algorithm recursively.
+usually. However, when i start, i find that it is really harder than 
+i thought! what can i do is just learning while coding. 
+i first use C++ template metaprograming in this proj, 
+and try to impl some algorithm recursively.
